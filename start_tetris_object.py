@@ -1,30 +1,36 @@
-__author__ = 'user'
+""" Start file for Tetris (Object-oriented)"""
+
+import copy
+import random
 
 import pygame
 
+from Scenes import GameScene, GameOverScene, PauseScene, MenuScene
 from Shared import constants
-
-# from Scenes import GameScene
-import copy
-import random
-from Scenes import *
 
 
 class Tetris:
+
+    """ Main class for game """
+
     def __init__(self):
+        """ Init for main class, creating initial values """
+
         pygame.init()
         pygame.mixer.init()
         pygame.display.set_caption("Tetris")
 
-        self.__clock = pygame.time.Clock()
+        self._clock = pygame.time.Clock()
 
-        self.screen = pygame.display.set_mode(constants.SCREEN_SIZE, pygame.DOUBLEBUF, 32)
+        self.screen = pygame.display.set_mode(constants.SCREEN_SIZE,
+                                              pygame.DOUBLEBUF,
+                                              32)
 
         pygame.mouse.set_visible(1)
-        self.__figures = []
+        self._figures = []
         self.set_figures(constants.CLASSIC_FIGURES)
 
-        self.__scenes = (
+        self._scenes = (
             GameScene(self),
             GameOverScene(self),
             PauseScene(self),
@@ -33,66 +39,80 @@ class Tetris:
         )
 
         # self.__currentScene = constants.PLAYING_SCENE
-        self.__currentScene = constants.MENU_SCENE
-        self.__sounds = ()
+        self._current_scene = constants.MENU_SCENE
+        self._sounds = ()
         self.reset()
 
     def reset(self):
-        self.__tick = 0
-        self.__level = 1
-        self.__score = 0
+        """ Resets initial values for game """
+        self._tick = 0
+        self._level = 1
+        self._score = 0
         # currentScene = self.__scenes[self.__currentScene]
         # currentScene.__init()
-        self.__scenes[self.__currentScene].__init__(self)
+        self._scenes[self._current_scene].__init__(self)
 
     def set_figures(self, figures):
-        self.__figures = copy.deepcopy(figures)
+        """ Creating initial set of figures for game - copying figures
+        from constants """
+        self._figures = copy.deepcopy(figures)
 
     def get_rand_figure(self):
-        # i = random.randint(0, len(self.__figures))
-        # print(i)
-        # print()
-        return copy.deepcopy(self.__figures[random.randint(0, len(self.__figures)) - 1])
+        """ Returns random figure from st of figures """
+        return copy.deepcopy(
+            self._figures[random.randint(0, len(self._figures)) - 1])
 
     def set_scene(self, scene):
-        self.__currentScene = scene
+        """ Changes current scene """
+        self._current_scene = scene
 
     def get_screen(self):
+        """ Return current scene """
         return self.screen
 
     def get_level(self):
-        return self.__level
+        """ Changes current scene """
+        return self._level
 
     def set_level(self, level):
-        self.__level = level
+        """ Set level """
+        self._level = level
 
     def get_score(self):
-        return self.__score
+        """ Returns score """
+        return self._score
 
     def add_score(self, incr):
-        self.__score += incr
+        """ Insreases score """
+        self._score += incr
 
     def tick_set_to_zero(self):
-        self.__tick = 0
+        """ For set initial counter for figure on new row """
+        self._tick = 0
 
     def tick_set_to_max(self):
-        self.__tick = constants.maxTicks
+        """ For move figure on next row down """
+        self._tick = constants.maxTicks
 
     def tick_increase(self):
-        self.__tick += 1
+        """ For increase ticks before move figure on next row down """
+        self._tick += 1
 
     def get_tick(self):
-        return self.__tick
+        """ Returns current tick for figure on the row """
+        return self._tick
 
     def start(self):
+        """ Main method for game with loop """
         while 1:
-            self.__clock.tick(
-                constants.pyTimer + (self.__level - 1) * constants.levelMultiplier)
+            self._clock.tick(
+                constants.pyTimer
+                + (self._level - 1) * constants.levelMultiplier)
             self.screen.fill((0, 0, 0))
-            currentScene = self.__scenes[self.__currentScene]
-            currentScene.handleEvents(pygame.event.get(), pygame.key.get_mods())
-            currentScene.render()
+            current_scene = self._scenes[self._current_scene]
+            current_scene.handleEvents(pygame.event.get(),
+                                       pygame.key.get_mods())
+            current_scene.render()
             pygame.display.update()
-
 
 Tetris().start()

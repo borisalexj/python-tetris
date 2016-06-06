@@ -6,7 +6,7 @@ from Shared import constants
 
 
 class Desk:
-    def __init__(self,vert_count,horiz_count):
+    def __init__(self, vert_count, horiz_count):
 
         self.__desk = []
         for y in range(vert_count):
