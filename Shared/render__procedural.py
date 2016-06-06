@@ -1,14 +1,18 @@
 __author__ = 'user'
-import constants
 import pygame
+
+from Shared import constants
+
 # import logic_structure
 
 def render_desk(screen, desk, start_x, start_y):
     for y in range(len(desk)):
         for x in range(len(desk[y])):
             pygame.draw.rect(screen, constants.COLORS[desk[y][x]],
-                             (start_x + (constants.BLOCKSIZE + constants.SPACER) * x + constants.SPACER,
-                              start_y + (constants.BLOCKSIZE + constants.SPACER) * y + constants.SPACER,
+                             (start_x + (
+                             constants.BLOCKSIZE + constants.SPACER) * x + constants.SPACER,
+                              start_y + (
+                              constants.BLOCKSIZE + constants.SPACER) * y + constants.SPACER,
                               constants.BLOCKSIZE,
                               constants.BLOCKSIZE), 0)
 
@@ -17,8 +21,10 @@ def render_figure(screen, desk, figure, fig_pos, start_x, start_y):
         for x in range(len(figure[y])):
             if figure[y][x] != 0:
                 pygame.draw.rect(screen, constants.COLORS[figure[y][x]],
-                                 (start_x + (constants.BLOCKSIZE + constants.SPACER) * (x + fig_pos[1]) + constants.SPACER,
-                                  start_y + (constants.BLOCKSIZE + constants.SPACER) * (y + fig_pos[0]) + constants.SPACER,
+                                 (start_x + (
+                                 constants.BLOCKSIZE + constants.SPACER) * (x + fig_pos[1]) + constants.SPACER,
+                                  start_y + (
+                                  constants.BLOCKSIZE + constants.SPACER) * (y + fig_pos[0]) + constants.SPACER,
                                   constants.BLOCKSIZE,
                                   constants.BLOCKSIZE),0)
 

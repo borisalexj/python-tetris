@@ -1,15 +1,18 @@
 __author__ = 'user'
 
 import pygame
-import constants
+
+from Shared import constants
 from Scenes.Scene import Scene
-from desk_class import Desk
-from figure_class import Figure
+from Shared.Desk import Desk
+from Shared.Figure import Figure
+
 
 class GameScene(Scene):
     def __init__(self, game):
         super(GameScene, self).__init__(game)
-        pygame.key.set_repeat(constants.KEYBOARD_REPEAT[0],constants.KEYBOARD_REPEAT[1])
+        pygame.key.set_repeat(constants.KEYBOARD_REPEAT[0],
+                              constants.KEYBOARD_REPEAT[1])
         self.__destroyed = 0
         self.__lines = 0
         self.__figures = 0
@@ -31,26 +34,32 @@ class GameScene(Scene):
             " Figures:" + str(self.__figures) + " Bricks:" + str(self.__destroyed))
         self.render_desk(screen,self.__desk.get_desk(),0,0)
         self.render_desk(screen,self.__desk_next.get_desk(),
-                         (constants.BLOCKS_H + constants.NEXT_OFFSET) * (constants.BLOCKSIZE + constants.SPACER),
+                         (constants.BLOCKS_H + constants.NEXT_OFFSET) * (
+                         constants.BLOCKSIZE + constants.SPACER),
                          (constants.BLOCKSIZE + constants.SPACER))
 
         self.render_figure(screen,self.__desk.get_desk(),self.__figure.get_figure(),self.__figure.get_position(),0,0)
 
         self.render_figure(screen,self.__desk.get_desk(),self.__figure_next.get_figure(),self.__figure_next.get_position(),
-                           (constants.BLOCKS_H + constants.NEXT_OFFSET) * (constants.BLOCKSIZE + constants.SPACER),
+                           (constants.BLOCKS_H + constants.NEXT_OFFSET) * (
+                           constants.BLOCKSIZE + constants.SPACER),
                            (constants.BLOCKSIZE + constants.SPACER))
         self.render_info(screen,
                          [str(constants.BLOCKS_V)+" x " + str(constants.BLOCKS_H),game.get_score(),self.__figures,game.get_level(),self.__lines,self.__destroyed],
                          ["Size","Score","Figures","Level","Lines","Bricks"],
-                         (constants.BLOCKS_H + constants.NEXT_OFFSET) * (constants.BLOCKSIZE + constants.SPACER)+constants.SPACER,
-                         ((constants.BLOCKSIZE + constants.SPACER)*(constants.NEXT_V+2) + constants.SPACER))
+                         (constants.BLOCKS_H + constants.NEXT_OFFSET) * (
+                         constants.BLOCKSIZE + constants.SPACER)+ constants.SPACER,
+                         ((constants.BLOCKSIZE + constants.SPACER)*(
+                         constants.NEXT_V+2) + constants.SPACER))
 
     def render_desk(self,screen, desk, start_x, start_y):
         for y in range(len(desk)):
             for x in range(len(desk[y])):
                 pygame.draw.rect(screen, constants.COLORS[desk[y][x]],
-                                 (start_x + (constants.BLOCKSIZE + constants.SPACER) * x + constants.SPACER,
-                                  start_y + (constants.BLOCKSIZE + constants.SPACER) * y + constants.SPACER,
+                                 (start_x + (
+                                 constants.BLOCKSIZE + constants.SPACER) * x + constants.SPACER,
+                                  start_y + (
+                                  constants.BLOCKSIZE + constants.SPACER) * y + constants.SPACER,
                                   constants.BLOCKSIZE,
                                   constants.BLOCKSIZE), 0)
 
@@ -59,8 +68,10 @@ class GameScene(Scene):
             for x in range(len(figure[y])):
                 if figure[y][x] != 0:
                     pygame.draw.rect(screen, constants.COLORS[figure[y][x]],
-                                     (start_x + (constants.BLOCKSIZE + constants.SPACER) * (x + fig_pos[1]) + constants.SPACER,
-                                      start_y + (constants.BLOCKSIZE + constants.SPACER) * (y + fig_pos[0]) + constants.SPACER,
+                                     (start_x + (
+                                     constants.BLOCKSIZE + constants.SPACER) * (x + fig_pos[1]) + constants.SPACER,
+                                      start_y + (
+                                      constants.BLOCKSIZE + constants.SPACER) * (y + fig_pos[0]) + constants.SPACER,
                                       constants.BLOCKSIZE,
                                       constants.BLOCKSIZE),0)
 
@@ -122,7 +133,7 @@ class GameScene(Scene):
                 lines = self.__desk.check_line()
                 if lines >0:
                     self.__lines += lines
-                    self.__destroyed += lines*constants.BLOCKS_H
+                    self.__destroyed += lines* constants.BLOCKS_H
                     game.set_level(1 + int(self.__lines / constants.NEXT_LEVEL_LINES))
                 for i in range(1, lines + 1):
                     game.add_score(constants.BLOCKS_H * i)

@@ -1,6 +1,8 @@
 __author__ = 'user'
-import constants
 import random
+
+from Shared import constants
+
 # import copy
 
 def create_desk(vert_count, horiz_count):

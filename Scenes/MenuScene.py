@@ -1,8 +1,10 @@
 __author__ = 'user'
 
 import pygame
-import constants
+
+from Shared import constants
 from Scenes.Scene import Scene
+
 
 class MenuScene(Scene):
     def __init__(self, game):

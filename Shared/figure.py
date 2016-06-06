@@ -1,7 +1,9 @@
 __author__ = 'user'
 import copy
 import random
-import constants
+
+from Shared import constants
+
 
 class Figure:
     __figures_count = 0

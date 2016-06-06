@@ -1,7 +1,9 @@
 __author__ = 'user'
 
-import constants
 import copy
+
+from Shared import constants
+
 
 class Desk:
     def __init__(self,vert_count,horiz_count):

@@ -1,7 +1,9 @@
 __author__ = 'user'
 
 import pygame
-import desk_class, constants
+
+from Shared import constants
+
 # from Scenes import GameScene
 import copy
 import random
@@ -84,7 +86,8 @@ class Tetris:
 
     def start(self):
         while 1:
-            self.__clock.tick(constants.pyTimer + (self.__level - 1) * constants.levelMultiplier)
+            self.__clock.tick(
+                constants.pyTimer + (self.__level - 1) * constants.levelMultiplier)
             self.screen.fill((0, 0, 0))
             currentScene = self.__scenes[self.__currentScene]
             currentScene.handleEvents(pygame.event.get(), pygame.key.get_mods())
