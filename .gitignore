@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+*.whoosh
+*.db
+*.egg-info
+.coverage
+.idea/
+db.py
+htmlcov/
+
