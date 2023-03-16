@@ -4,8 +4,8 @@ import pygame
 
 from Shared import constants
 from Scenes.Scene import Scene
-from Shared.Desk import Desk
-from Shared.Figure import Figure
+from Shared.desk import Desk
+from Shared.figure import Figure
 
 
 class GameScene(Scene):

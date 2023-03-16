@@ -41,6 +41,9 @@ screen = pygame.display.set_mode(constants.SCREEN_SIZE, pygame.DOUBLEBUF, 32)
 pygame.mouse.set_visible(1)
 pygame.key.set_repeat(constants.KEYBOARD_REPEAT[0], constants.KEYBOARD_REPEAT[1])
 
+MODS_CONTROL_PRESSED = 4160
+MODS_NO_PRESSED = 4096
+
 # scene = Scene(self)
 
 while 1:
@@ -81,43 +84,42 @@ while 1:
         if event.type == pygame.KEYDOWN  and not _gameOver:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                 exit()
-
             if event.key == pygame.K_p:
                 _gamePaused = True
                 pygame.key.set_repeat(0, 0)
 
-            if event.key == pygame.K_RIGHT and mods ==64:
+            if event.key == pygame.K_RIGHT and mods == MODS_CONTROL_PRESSED:
                 constants.BLOCKS_H +=1
                 for y in range(len(_desk)): _desk[y].append(0)
 
-            if event.key == pygame.K_LEFT and mods ==64 and constants.BLOCKS_H>5:
+            if event.key == pygame.K_LEFT and mods == MODS_CONTROL_PRESSED and constants.BLOCKS_H>5:
                 constants.BLOCKS_H -=1
                 for y in range(len(_desk)): _desk[y].pop()
                 if _fig_pos[1]+len(_figure[0])>len(_desk[0]):
                     _fig_pos[1] -=1
 
-            if event.key == pygame.K_DOWN and mods ==64:
+            if event.key == pygame.K_DOWN and mods == MODS_CONTROL_PRESSED:
                 constants.BLOCKS_V +=1
                 _desk = logic_procedural.add_empty_line(copy.deepcopy(_desk))
 
-            if event.key == pygame.K_UP and mods ==64 and constants.BLOCKS_V>5:
+            if event.key == pygame.K_UP and mods == MODS_CONTROL_PRESSED and constants.BLOCKS_V>5:
                 constants.BLOCKS_V -=1
                 _desk.pop()
 
-            if (event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT) and mods ==64:
+            if (event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT) and mods == MODS_CONTROL_PRESSED:
                 constants.SCREEN_SIZE = constants.calculate_screen_size(
                     constants.BLOCKS_H, constants.BLOCKS_V)
                 screen = pygame.display.set_mode(constants.SCREEN_SIZE, pygame.DOUBLEBUF, 32)
 
-            if (event.key == pygame.K_RIGHT or event.key == pygame.K_KP6) and mods == 0:
+            if (event.key == pygame.K_RIGHT or event.key == pygame.K_KP6) and mods == MODS_NO_PRESSED:
                 if not logic_procedural.check_intersect(_desk, _figure, [_fig_pos[0], _fig_pos[1] + 1]):
                     _fig_pos[1] += 1
 
-            if (event.key == pygame.K_LEFT or event.key == pygame.K_KP4)  and mods == 0:
+            if (event.key == pygame.K_LEFT or event.key == pygame.K_KP4)  and mods == MODS_NO_PRESSED:
                 if not logic_procedural.check_intersect(_desk, _figure, [_fig_pos[0], _fig_pos[1] - 1]):
                     _fig_pos[1] -= 1
 
-            if (event.key == pygame.K_5 or event.key == pygame.K_UP or event.key == pygame.K_KP5) and mods == 0:
+            if (event.key == pygame.K_5 or event.key == pygame.K_UP or event.key == pygame.K_KP5) and mods == MODS_NO_PRESSED:
                 tmp_rotated, tmp_pos = logic_procedural.rotate(_figure, _fig_pos)
                 if len(tmp_rotated[0]) + tmp_pos[1] >= len(_desk[0]): #len(__figure[0]) + __fig_pos[1] == len(__desk[0]): # trying to move on -1 from right
                     tmp_pos[1] -= (len(tmp_rotated[0]) + tmp_pos[1]) - len(_desk[0])
@@ -140,13 +142,13 @@ while 1:
                     if not logic_structure.check_intersect(__desk, tmp_rotated, tmp_pos):
                         __figure, __fig_pos = tmp_rotated, tmp_pos # logic_structure.rotate(__figure, [__fig_pos[0], __fig_pos[1]])"""
 
-            if (event.key == pygame.K_SPACE or event.key == pygame.K_DOWN or event.key == pygame.K_KP2) and mods == 0:
+            if (event.key == pygame.K_SPACE or event.key == pygame.K_DOWN or event.key == pygame.K_KP2) and mods == MODS_NO_PRESSED:
                 if not logic_procedural.check_intersect(_desk, _figure, [_fig_pos[0] + 1, _fig_pos[1]]):
                     _fig_pos[0] += 1
                 else:
                     tick = constants.maxTicks - 1
 
-            if (event.key == pygame.K_KP8) and mods == 0:
+            if (event.key == pygame.K_KP8) and mods == MODS_NO_PRESSED:
                 if not logic_procedural.check_intersect(_desk, _figure, [_fig_pos[0] - 1, _fig_pos[1]]):
                     _fig_pos[0] -= 1
                     if _fig_pos[0] <0 : _fig_pos[0]=0
